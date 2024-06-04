@@ -52,12 +52,9 @@ export default function Ayat() {
       <div className="grid gap-8 text-left">
         {ayat.length > 0 ? (
           ayat.map((ayat: any, index: number) => (
-            <div
-              className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6"
-              key={index}
-            >
+            <div className="bg-gray-800 rounded-lg shadow-md p-6" key={index}>
               <div className="flex items-center justify-between mb-4">
-                <div className="text-gray-600 dark:text-gray-400 text-sm">
+                <div className="text-gray-400 text-sm">
                   Surah {namaLatin}, Ayat {ayat.nomorAyat}
                 </div>
                 <audio
@@ -75,20 +72,20 @@ export default function Ayat() {
                 </button>
               </div>
               <div className="space-y-2">
-                <div className="text-3xl font-bold text-gray-800 dark:text-gray-100">
+                <div className="text-3xl font-bold text-gray-100">
                   {ayat.teksArab}
                 </div>
-                <div className="text-xl font-medium text-gray-600 dark:text-gray-400">
+                <div className="text-xl font-medium text-gray-400">
                   {ayat.teksLatin}
                 </div>
-                <div className="text-lg text-gray-700 dark:text-gray-300">
+                <div className="text-lg text-gray-300">
                   {ayat.teksIndonesia}
                 </div>
               </div>
             </div>
           ))
         ) : (
-          <h1 className="text-center text-6xl font-bold mt-10">Loading....</h1>
+          <h1 className="text-center text-6xl font-bold mt-10"><span className=" mr-5 animate-spin inline-block">/</span>Loading....</h1>
         )}
       </div>
     </div>
