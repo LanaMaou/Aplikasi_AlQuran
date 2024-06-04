@@ -88,7 +88,7 @@ export default function Ayat() {
             </div>
           ))
         ) : (
-          <p className="text-black">Loading....</p>
+          <h1 className="text-center text-6xl font-bold mt-10">Loading....</h1>
         )}
       </div>
     </div>

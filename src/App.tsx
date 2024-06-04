@@ -43,10 +43,9 @@ function App() {
       <Container maxWidth="xl">
         <Typography
           variant="h3"
-          color={"#eeeeee"}
           fontWeight={"bold"}
           fontFamily={"inter"}
-          className="drop-shadow-xl"
+          className="drop-shadow-xl bg-gradient-to-r from-blue-200 to-indigo-900 text-transparent bg-clip-text"
         >
           Aplikasi Al-Qur'an
         </Typography>
