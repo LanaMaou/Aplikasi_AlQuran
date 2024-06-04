@@ -85,7 +85,10 @@ export default function Ayat() {
             </div>
           ))
         ) : (
-          <h1 className="text-center text-6xl font-bold mt-10"><span className=" mr-5 animate-spin inline-block">/</span>Loading....</h1>
+          <h1 className="text-center text-6xl font-bold mt-10">
+            <span className=" mr-5 animate-spin inline-block">/</span>
+            Loading....
+          </h1>
         )}
       </div>
     </div>

@@ -90,21 +90,15 @@ const Content = ({ data }: { data: any }) => {
           <p>{data.nomor}</p>
         </span>
         <Box display={"flex"} justifyContent={"space-between"} flexGrow={1}>
-          <Typography  gutterBottom fontWeight={"bold"}>
+          <Typography gutterBottom fontWeight={"bold"}>
             {data.namaLatin} <br />{" "}
-            <Typography
-              variant="caption"
-              
-              fontWeight={"bold"}
-            >
+            <Typography variant="caption" fontWeight={"bold"}>
               {data.arti}
             </Typography>
           </Typography>
           <Typography component="div" textAlign={"right"}>
             {data.nama} <br />
-            <Typography variant="caption" >
-              {data.jumlahAyat} Ayat
-            </Typography>
+            <Typography variant="caption">{data.jumlahAyat} Ayat</Typography>
           </Typography>
         </Box>
       </CardContent>
