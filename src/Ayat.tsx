@@ -26,11 +26,11 @@ export default function Ayat() {
   }, [nomorSurat]);
 
   return (
-    <div className="w-full max-w-3xl mx-auto py-12 px-4 sm:px-6 lg:px-8 mt-2">
+    <div className="w-full max-w-3xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
       <div className="flex justify-between w-full my-4 items-center">
         <Link
           to="/"
-          className="text-blue-500 hover:text-blue-600 bg-slate-700 p-3 rounded-md my-4 block max-w-32 shadow shadow-blue-400"
+          className="text-blue-500 hover:text-blue-600 bg-slate-700 px-2 py-2 sm:p-3 rounded-md my-4 block max-w-32 shadow shadow-blue-400"
         >
           ⬅️ Kembali
         </Link>
@@ -40,7 +40,7 @@ export default function Ayat() {
           ref={(audio) => (audioRefsFull.current = audio)}
         ></audio>
         <button
-          className="bg-blue-500 hover:bg-blue-600 text-white px-3 rounded-md flex items-center space-x-2 h-12"
+          className="bg-blue-500 hover:bg-blue-600 text-white px-3 rounded-md flex items-center space-x-2 h-10 sm:h-12 font-semibold"
           onClick={() => {
             audioRefsFull.current?.play();
           }}
@@ -62,7 +62,7 @@ export default function Ayat() {
                   ref={(audio) => (audioRefs.current[index] = audio)}
                 ></audio>
                 <button
-                  className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-md flex items-center space-x-2"
+                  className="bg-blue-500 hover:bg-blue-600 text-white px-3 rounded-md flex items-center space-x-2 h-10 sm:h-12 text-sm font-semibold sm:text-base"
                   onClick={() => {
                     audioRefs.current[index]?.play();
                   }}
@@ -85,7 +85,7 @@ export default function Ayat() {
             </div>
           ))
         ) : (
-          <h1 className="text-center text-6xl font-bold mt-10">
+          <h1 className="text-center text-4xl font-bold mt-10">
             <span className=" mr-5 animate-spin inline-block">/</span>
             Loading....
           </h1>

@@ -41,36 +41,38 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <Container maxWidth="xl">
-        <Typography
-          variant="h3"
-          fontWeight={"bold"}
-          fontFamily={"inter"}
-          className="drop-shadow-xl bg-gradient-to-r from-blue-200 to-indigo-900 text-transparent bg-clip-text"
-        >
+        <h1 className="drop-shadow-xl bg-gradient-to-r from-blue-200 to-indigo-900 text-transparent bg-clip-text font-inter font-bold text-3xl lg:text-5xl pt-10">
           Aplikasi Al-Qur'an
-        </Typography>
+        </h1>
         <BrowserRouter>
           <Routes>
             <Route
               path="/"
               element={
-                <Grid my={2} container spacing={2}>
-                  {data.map((data: any, index: any) => (
-                    <Grid item xs={4} key={index}>
-                      <Card
-                        sx={{
-                          boxShadow: 6,
-                          borderRadius: 3,
-                          marginBottom: 2,
-                          backgroundColor: "#334155",
-                          color: "#eeeeee",
-                        }}
-                        key={index}
-                      >
-                        <Content data={data} />
-                      </Card>
-                    </Grid>
-                  ))}
+                <Grid my={2} container spacing={2} justifyContent="center">
+                  {data.length > 0 ? (
+                    data.map((data: any, index: any) => (
+                      <Grid item xs={12} sm={6} md={4} key={index}>
+                        <Card
+                          sx={{
+                            boxShadow: 6,
+                            borderRadius: 3,
+                            marginBottom: 2,
+                            backgroundColor: "#334155",
+                            color: "#eeeeee",
+                          }}
+                          key={index}
+                        >
+                          <Content data={data} />
+                        </Card>
+                      </Grid>
+                    ))
+                  ) : (
+                    <h1 className="text-center text-4xl font-bold mt-10">
+                      <span className=" mr-5 animate-spin inline-block">/</span>
+                      Loading....
+                    </h1>
+                  )}
                 </Grid>
               }
             />
