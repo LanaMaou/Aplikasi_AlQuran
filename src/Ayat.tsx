@@ -54,7 +54,7 @@ export default function Ayat() {
           ayat.map((ayat: any, index: number) => (
             <div className="bg-gray-800 rounded-lg shadow-md p-6" key={index}>
               <div className="flex items-center justify-between mb-4">
-                <div className="text-gray-400 text-sm">
+                <div className="text-gray-400 text-sm sm:text-base">
                   Surah {namaLatin}, Ayat {ayat.nomorAyat}
                 </div>
                 <audio
@@ -72,13 +72,13 @@ export default function Ayat() {
                 </button>
               </div>
               <div className="space-y-2">
-                <div className="text-3xl font-bold text-gray-100">
+                <div className="text-xl sm:text-3xl font-bold text-gray-100 text-right">
                   {ayat.teksArab}
                 </div>
-                <div className="text-xl font-medium text-gray-400">
+                <div className="text-base sm:text-lg font-medium text-gray-400">
                   {ayat.teksLatin}
                 </div>
-                <div className="text-lg text-gray-300">
+                <div className="text-sm sm:text-base text-gray-300">
                   {ayat.teksIndonesia}
                 </div>
               </div>
