@@ -2,6 +2,7 @@
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { CiPause1 } from "react-icons/ci";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export default function Ayat() {
@@ -9,8 +10,26 @@ export default function Ayat() {
   const [ayat, setAyat] = useState([]);
   const [namaLatin, setNamaLatin] = useState([]);
   const [audioFull, setAudioFull] = useState("");
-  const audioRefs = useRef<(HTMLAudioElement | null)[]>([]);
-  const audioRefsFull = useRef<HTMLAudioElement | null>();
+  const audioRefs = useRef<HTMLAudioElement[]>([]);
+  const [isPlaying, setIsPlaying] = useState(null);
+
+  const handlePlayPause = (index: any) => {
+    if (isPlaying === index) {
+      audioRefs.current[index].pause();
+      setIsPlaying(null);
+    } else {
+      if (isPlaying !== null) {
+        audioRefs.current[isPlaying].pause();
+        audioRefs.current[isPlaying].currentTime = 0;
+      }
+      audioRefs.current[index].play();
+      setIsPlaying(index);
+
+      audioRefs.current[index].onended = () => {
+        setIsPlaying(null);
+      };
+    }
+  };
 
   useEffect(() => {
     const getData = async () => {
@@ -37,16 +56,23 @@ export default function Ayat() {
 
         <audio
           src={audioFull}
-          ref={(audio) => (audioRefsFull.current = audio)}
+          ref={(audio: any) => (audioRefs.current[1] = audio)}
         ></audio>
         <button
           className="bg-blue-500 hover:bg-blue-600 text-white px-3 rounded-md flex items-center space-x-2 h-10 sm:h-12 font-semibold"
-          onClick={() => {
-            audioRefsFull.current?.play();
-          }}
+          onClick={() => handlePlayPause(1)}
         >
-          <PlayIcon className="h-5 w-5" />
-          <span>Putar Audio Full</span>
+          {isPlaying && isPlaying === 1 ? (
+            <>
+              <CiPause1 className="h-5 w-5" />
+              <span>Jeda Audio</span>
+            </>
+          ) : (
+            <>
+              <PlayIcon className="h-5 w-5" />
+              <span>Putar Audio Full</span>
+            </>
+          )}
         </button>
       </div>
       <div className="grid gap-8 text-left">
@@ -59,16 +85,23 @@ export default function Ayat() {
                 </div>
                 <audio
                   src={ayat.audio["05"]}
-                  ref={(audio) => (audioRefs.current[index] = audio)}
+                  ref={(audio: any) => (audioRefs.current[index + 2] = audio)}
                 ></audio>
                 <button
                   className="bg-blue-500 hover:bg-blue-600 text-white px-3 rounded-md flex items-center space-x-2 h-10 sm:h-12 text-sm font-semibold sm:text-base"
-                  onClick={() => {
-                    audioRefs.current[index]?.play();
-                  }}
+                  onClick={() => handlePlayPause(index + 2)}
                 >
-                  <PlayIcon className="h-5 w-5" />
-                  <span>Putar Audio Ayat {ayat.nomorAyat}</span>
+                  {isPlaying && isPlaying === index + 2 ? (
+                    <>
+                      <CiPause1 className="h-5 w-5" />
+                      <span>Jeda Audio Ayat {ayat.nomorAyat}</span>
+                    </>
+                  ) : (
+                    <>
+                      <PlayIcon className="h-5 w-5" />
+                      <span>Putar Audio Ayat {ayat.nomorAyat}</span>
+                    </>
+                  )}
                 </button>
               </div>
               <div className="space-y-2">

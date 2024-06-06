@@ -29,12 +29,13 @@ const theme = createTheme({
 
 function App() {
   const [data, setData] = useState([]);
-  const getAPI = async () => {
-    const response = await axios("https://equran.id/api/v2/surat");
-    setData(response.data.data);
-  };
 
   useEffect(() => {
+    const getAPI = async () => {
+      const response = await axios("https://equran.id/api/v2/surat");
+      setData(response.data.data);
+    };
+    
     getAPI();
   }, []);
 
