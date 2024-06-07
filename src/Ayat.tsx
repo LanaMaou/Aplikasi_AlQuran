@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { CiPause1 } from "react-icons/ci";
@@ -33,12 +32,25 @@ export default function Ayat() {
 
   useEffect(() => {
     const getData = async () => {
-      const response = await axios(
-        `https://equran.id/api/v2/surat/${nomorSurat}`
-      );
-      setAyat(response.data.data.ayat);
-      setNamaLatin(response.data.data.namaLatin);
-      setAudioFull(response.data.data.audioFull["05"]);
+      try {
+        const response = await fetch(`/api/equran?nomorSurat=${nomorSurat}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error(`Request failed with status ${response.status}`);
+        }
+
+        const data = await response.json();
+        setAyat(data.data.ayat);
+        setNamaLatin(data.data.namaLatin);
+        setAudioFull(data.data.audioFull["05"]);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
     };
 
     getData();

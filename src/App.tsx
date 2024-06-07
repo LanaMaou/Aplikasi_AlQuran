@@ -32,7 +32,7 @@ function App() {
   useEffect(() => {
     const getAPI = async () => {
       try {
-        const response = await fetch("https://equran.id/api/v2/surat");
+        const response = await fetch("/api/equran");
 
         if (!response.ok) {
           throw new Error(`Request failed with status ${response.status}`);
