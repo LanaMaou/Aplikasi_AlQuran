@@ -32,7 +32,8 @@ function App() {
 
   useEffect(() => {
     const getAPI = async () => {
-      const response = await axios("https://equran.id/api/v2/surat");
+      const response = await axios("/api/equran");
+      console.log(response.data);
       setData(response.data.data);
     };
 
