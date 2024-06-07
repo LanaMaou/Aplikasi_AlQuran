@@ -35,7 +35,7 @@ function App() {
       const response = await axios("https://equran.id/api/v2/surat");
       setData(response.data.data);
     };
-    
+
     getAPI();
   }, []);
 
