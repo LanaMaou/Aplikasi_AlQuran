@@ -34,7 +34,7 @@ export default function Ayat() {
   useEffect(() => {
     const getData = async () => {
       const response = await axios(
-        `/api/equran?nomorSurat=${nomorSurat}`
+        `https://equran.id/api/v2/surat/${nomorSurat}`
       );
       setAyat(response.data.data.ayat);
       setNamaLatin(response.data.data.namaLatin);

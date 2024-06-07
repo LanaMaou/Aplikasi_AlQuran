@@ -16,7 +16,6 @@ import "@fontsource/inter/300.css";
 import "@fontsource/inter/400.css";
 import "@fontsource/inter/500.css";
 import "@fontsource/inter/700.css";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import Ayat from "./Ayat";
@@ -32,9 +31,18 @@ function App() {
 
   useEffect(() => {
     const getAPI = async () => {
-      const response = await axios("/api/equran");
-      console.log(response.data);
-      setData(response.data.data);
+      try {
+        const response = await fetch("https://equran.id/api/v2/surat");
+
+        if (!response.ok) {
+          throw new Error(`Request failed with status ${response.status}`);
+        }
+
+        const data = await response.json();
+        setData(data.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
     };
 
     getAPI();
