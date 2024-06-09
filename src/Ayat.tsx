@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { CiPause1 } from "react-icons/ci";
+import { IoMdArrowRoundBack } from "react-icons/io";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export default function Ayat() {
@@ -59,40 +60,47 @@ export default function Ayat() {
   return (
     <div className="w-full max-w-3xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
       <div className="flex justify-between w-full my-4 items-center">
-        <Link
-          to="/"
-          className="text-blue-500 hover:text-blue-600 bg-slate-700 px-2 py-2 sm:p-3 rounded-md my-4 block max-w-32 shadow shadow-blue-400"
-        >
-          ⬅️ Kembali
-        </Link>
+        {ayat.length > 0 && (
+          <>
+            <Link
+              to="/"
+              className="bg-slate-400 hover:bg-slate-600 text-black px-3 rounded-md flex items-center space-x-2 h-10 sm:h-12 font-semibold transition-all duration-200 hover:shadow  hover:shadow-white"
+            >
+              <IoMdArrowRoundBack className="inline h-5 w-5" /> Kembali
+            </Link>
 
-        <audio
-          src={audioFull}
-          ref={(audio: any) => (audioRefs.current[1] = audio)}
-        ></audio>
-        <button
-          className="bg-blue-500 hover:bg-blue-600 text-white px-3 rounded-md flex items-center space-x-2 h-10 sm:h-12 font-semibold"
-          onClick={() => handlePlayPause(1)}
-        >
-          {isPlaying && isPlaying === 1 ? (
-            <>
-              <CiPause1 className="h-5 w-5" />
-              <span>Jeda Audio</span>
-            </>
-          ) : (
-            <>
-              <PlayIcon className="h-5 w-5" />
-              <span>Putar Audio Full</span>
-            </>
-          )}
-        </button>
+            <audio
+              src={audioFull}
+              ref={(audio: any) => (audioRefs.current[1] = audio)}
+            ></audio>
+            <button
+              className="bg-slate-400 hover:bg-slate-600 text-black px-3 rounded-md flex items-center space-x-2 h-10 sm:h-12 font-semibold hover:shadow  hover:shadow-white"
+              onClick={() => handlePlayPause(1)}
+            >
+              {isPlaying && isPlaying === 1 ? (
+                <>
+                  <CiPause1 className="h-5 w-5" />
+                  <span>Jeda Audio</span>
+                </>
+              ) : (
+                <>
+                  <PlayIcon className="h-5 w-5" />
+                  <span>Putar Audio Full</span>
+                </>
+              )}
+            </button>
+          </>
+        )}
       </div>
-      <div className="grid gap-8 text-left">
+      <div className="grid gap-6 text-left">
         {ayat.length > 0 ? (
           ayat.map((ayat: any, index: number) => (
-            <div className="bg-gray-800 rounded-lg shadow-md p-6" key={index}>
+            <div
+              className="bg-gradient-to-tl from-slate-800 to bg-slate-950 rounded-xl shadow-sm shadow-white border border-slate-400 bg-opacity-80 p-3"
+              key={index}
+            >
               <div className="flex items-center justify-between mb-4">
-                <div className="text-gray-400 text-sm sm:text-base">
+                <div className="text-slate-400 text-sm sm:text-base font-semibold">
                   Surah {namaLatin}, Ayat {ayat.nomorAyat}
                 </div>
                 <audio
@@ -100,25 +108,25 @@ export default function Ayat() {
                   ref={(audio: any) => (audioRefs.current[index + 2] = audio)}
                 ></audio>
                 <button
-                  className="bg-blue-500 hover:bg-blue-600 text-white px-3 rounded-md flex items-center space-x-2 h-10 sm:h-12 text-sm font-semibold sm:text-base"
+                  className="bg-slate-400 hover:bg-slate-600 text-black px-3 rounded-md flex items-center space-x-2 h-10 sm:h-10 text-sm font-semibold sm:text-base mb-1 hover:shadow  hover:shadow-white"
                   onClick={() => handlePlayPause(index + 2)}
                 >
                   {isPlaying && isPlaying === index + 2 ? (
                     <>
                       <CiPause1 className="h-5 w-5" />
-                      <span>Jeda Audio Ayat {ayat.nomorAyat}</span>
+                      <span>Jeda Ayat {ayat.nomorAyat}</span>
                     </>
                   ) : (
                     <>
                       <PlayIcon className="h-5 w-5" />
-                      <span>Putar Audio Ayat {ayat.nomorAyat}</span>
+                      <span>Putar Ayat {ayat.nomorAyat}</span>
                     </>
                   )}
                 </button>
               </div>
               <div className="space-y-2">
-                <div className="text-xl sm:text-3xl font-bold text-gray-100 text-right">
-                  {ayat.teksArab}
+                <div className="text-xl sm:text-3xl font-bold text-slate-300 text-right">
+                  <p className="leading-relaxed">{ayat.teksArab}</p>
                 </div>
                 <div className="text-base sm:text-lg font-medium text-gray-400">
                   {ayat.teksLatin}
@@ -130,8 +138,8 @@ export default function Ayat() {
             </div>
           ))
         ) : (
-          <h1 className="text-center text-4xl font-bold mt-10">
-            <span className=" mr-5 animate-spin inline-block">/</span>
+          <h1 className="text-center text-4xl font-bold">
+            <span className="mr-5 animate-spin inline-block">/</span>
             Loading....
           </h1>
         )}

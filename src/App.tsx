@@ -1,13 +1,15 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Box,
   Button,
-  Card,
   CardActions,
   CardContent,
   Container,
   createTheme,
+  debounce,
   Grid,
+  TextField,
   ThemeProvider,
   Typography,
 } from "@mui/material";
@@ -18,17 +20,41 @@ import "@fontsource/inter/500.css";
 import "@fontsource/inter/700.css";
 import { useEffect, useState } from "react";
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
+import { FiArrowUpRight } from "react-icons/fi";
 import Ayat from "./Ayat";
+import { MenuBook } from "@mui/icons-material";
 
 const theme = createTheme({
   typography: {
     fontFamily: "Inter, sans-serif",
   },
+  palette: {
+    mode: "dark",
+  },
 });
 
 function App() {
   const [data, setData] = useState([]);
+  const [dataFresh, setDataFresh] = useState([]);
+  const [dataNotFound, setDataNotFound] = useState(false);
 
+  // Search handler
+  const handleSearch = debounce((event: any) => {
+    const value = event.target.value;
+    const filteredData = dataFresh.filter((item: any) =>
+      item.namaLatin.toLowerCase().includes(value.toLowerCase())
+    );
+
+    if (filteredData.length === 0) {
+      setData([]);
+      setDataNotFound(true);
+    } else {
+      setData(filteredData);
+      setDataNotFound(false);
+    }
+  }, 300);
+
+  // Fetching data
   useEffect(() => {
     const getAPI = async () => {
       try {
@@ -39,6 +65,7 @@ function App() {
         }
 
         const data = await response.json();
+        setDataFresh(data.data);
         setData(data.data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -54,36 +81,17 @@ function App() {
         <h1 className="drop-shadow-xl bg-gradient-to-r from-blue-200 to-indigo-900 text-transparent bg-clip-text font-inter font-bold text-3xl lg:text-5xl pt-10">
           Aplikasi Al-Qur'an
         </h1>
+
         <BrowserRouter>
           <Routes>
             <Route
               path="/"
               element={
-                <Grid my={2} container spacing={2} justifyContent="center">
-                  {data.length > 0 ? (
-                    data.map((data: any, index: any) => (
-                      <Grid item xs={12} sm={6} md={4} key={index}>
-                        <Card
-                          sx={{
-                            boxShadow: 6,
-                            borderRadius: 3,
-                            marginBottom: 2,
-                            backgroundColor: "#334155",
-                            color: "#eeeeee",
-                          }}
-                          key={index}
-                        >
-                          <Content data={data} />
-                        </Card>
-                      </Grid>
-                    ))
-                  ) : (
-                    <h1 className="text-center text-4xl font-bold mt-10">
-                      <span className=" mr-5 animate-spin inline-block">/</span>
-                      Loading....
-                    </h1>
-                  )}
-                </Grid>
+                <Surat
+                  data={data}
+                  handleSearch={handleSearch}
+                  dataNotFound={dataNotFound}
+                />
               }
             />
             <Route path="/ayat/:nomorSurat" element={<Ayat />} />
@@ -94,11 +102,59 @@ function App() {
   );
 }
 
+const Surat = ({
+  data,
+  handleSearch = () => {},
+  dataNotFound,
+}: {
+  data: any;
+  handleSearch: any;
+  dataNotFound: any;
+}) => {
+  return (
+    <>
+      {(data.length > 0 || dataNotFound) && (
+        <div className="md:w-1/3 lg:w-1/4 mt-6 -mb-4 w-full">
+          <Box sx={{ display: "flex", alignItems: "flex-end" }}>
+            <MenuBook sx={{ color: "action.active", mr: 1, my: 0.5 }} />
+            <TextField
+              id="input-with-sx"
+              label="Cari Surah Al-Qur'an"
+              variant="standard"
+              fullWidth
+              onInput={(e) => handleSearch(e)}
+            />
+          </Box>
+        </div>
+      )}
+      <Grid my={2} container spacing={2} justifyContent="center">
+        {data.length > 0 && dataNotFound === false ? (
+          data.map((data: any, index: any) => (
+            <Grid item xs={12} sm={6} md={4} key={index}>
+              <div
+                key={index}
+                className="bg-blue-600 rounded-lg shadow-sm shadow-blue-500 border border-blue-500 bg-opacity-70"
+              >
+                <Content data={data} />
+              </div>
+            </Grid>
+          ))
+        ) : (
+          <h1 className="text-center text-4xl font-bold mt-10">
+            <span className=" mr-5 animate-spin inline-block">/</span>
+            {dataNotFound ? "Surah Tidak Ditemukan" : "Loading..."}
+          </h1>
+        )}
+      </Grid>
+    </>
+  );
+};
+
 const Content = ({ data }: { data: any }) => {
   return (
     <>
       <CardContent sx={{ display: "flex", textAlign: "left" }}>
-        <span className="w-10 h-10 relative z-[1] mr-5 flex items-center justify-center before:content-[''] before:bg-green-600 before:h-10 before:w-10 before:absolute before:-z-[1] before:rotate-45 text-white font-bold before:rounded-md before:drop-shadow-md">
+        <span className="w-10 h-10 relative z-[1] mr-5 flex items-center justify-center before:content-[''] before:bg-blue-500 before:h-10 before:w-10 before:absolute before:-z-[1] before:rotate-45 text-white font-bold before:rounded-md before:drop-shadow-md">
           <p>{data.nomor}</p>
         </span>
         <Box display={"flex"} justifyContent={"space-between"} flexGrow={1}>
@@ -115,8 +171,18 @@ const Content = ({ data }: { data: any }) => {
         </Box>
       </CardContent>
       <CardActions>
-        <Button size="small" color="primary" variant="outlined">
-          <Link to={`/ayat/${data.nomor}`}>Lihat Selengkapnya ≫</Link>
+        <Button
+          size="medium"
+          variant="contained"
+          sx={{
+            color: "black",
+            backgroundColor: "#60a5fa",
+            textTransform: "none",
+          }}
+        >
+          <Link to={`/ayat/${data.nomor}`} className="font-semibold">
+            Lihat Selengkapnya <FiArrowUpRight className="h-5 w-5 inline" />
+          </Link>
         </Button>
       </CardActions>
     </>
