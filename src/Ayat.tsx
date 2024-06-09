@@ -58,7 +58,7 @@ export default function Ayat() {
   }, [nomorSurat]);
 
   return (
-    <div className="w-full max-w-3xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
+    <div className="w-full max-w-6xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
       <div className="flex justify-between w-full my-4 items-center">
         {ayat.length > 0 && (
           <>
@@ -124,7 +124,7 @@ export default function Ayat() {
                   )}
                 </button>
               </div>
-              <div className="space-y-2">
+              <div className="space-y-4">
                 <div className="text-xl sm:text-3xl font-bold text-slate-300 text-right">
                   <p className="leading-relaxed">{ayat.teksArab}</p>
                 </div>
