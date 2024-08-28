@@ -81,6 +81,12 @@ function App() {
         <h1 className="drop-shadow-xl bg-gradient-to-r from-blue-200 to-indigo-900 text-transparent bg-clip-text font-inter font-bold text-3xl lg:text-5xl pt-10">
           Aplikasi Al-Qur'an
         </h1>
+        <p className="text-sm">
+          Made by{" "}
+          <a href="lanamaou.my.id" className="text-sm text-blue-500 inline-block animate-bounce">
+            Ahmad Maulana Alaudin.{" "}
+          </a>
+        </p>
 
         <BrowserRouter>
           <Routes>
@@ -143,7 +149,8 @@ const Surat = ({
           <h1 className="text-center text-4xl font-bold mt-10">
             {dataNotFound ? (
               <p className="text-red-400 text-2xl md:text-4xl font-bold">
-                <span className="animate-bounce inline-block">❌</span>  Surah Tidak Ditemukan
+                <span className="animate-bounce inline-block">❌</span> Surah
+                Tidak Ditemukan
               </p>
             ) : (
               <div className="flex items-center">
