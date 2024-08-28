@@ -83,7 +83,7 @@ function App() {
         </h1>
         <p className="text-sm">
           Made by{" "}
-          <a href="lanamaou.my.id" className="text-sm text-blue-500 inline-block animate-bounce">
+          <a href="https://lanamaou.my.id" className="text-sm text-blue-500 inline-block animate-bounce">
             Ahmad Maulana Alaudin.{" "}
           </a>
         </p>
